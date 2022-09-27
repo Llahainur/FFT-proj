@@ -28,7 +28,7 @@
 ****************************************************************************/
 
 #include "xyseriesiodevice.h"
-
+#include <stdio.h>
 #include <QtCharts/QXYSeries>
 
 XYSeriesIODevice::XYSeriesIODevice(QXYSeries *series, QObject *parent) :
@@ -62,8 +62,9 @@ qint64 XYSeriesIODevice::writeData(const char *data, qint64 maxSize)
             m_buffer[s].setY(m_buffer.at(s + availableSamples).y());
     }
 
-    for (int s = start; s < sampleCount; ++s, data += resolution)
+    for (int s = start; s < sampleCount; ++s, data += resolution){
         m_buffer[s].setY(qreal(uchar(*data) -128) / qreal(128));
+    }
 
     m_series->replace(m_buffer);
     return (sampleCount - start) * resolution;
