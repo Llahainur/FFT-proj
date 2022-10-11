@@ -11,4 +11,4 @@ public:
     void FFTAnalysis(double *AVal, double *FTvl, int Nvl, int Nft);
 };
 
-#endif // FFT_H
+#endif // FFT_H спектр для случайных сигналов

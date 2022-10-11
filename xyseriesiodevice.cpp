@@ -46,7 +46,8 @@ qint64 XYSeriesIODevice::readData(char *data, qint64 maxSize)
 
 qint64 XYSeriesIODevice::writeData(const char *data, qint64 maxSize)
 {
-    static const int resolution = 4;
+    static const int resolution = 4;//как-то получить размер буфера кратный степени 2 для бпф
+    qDebug()<<maxSize;
 
     if (m_buffer.isEmpty()) {
         m_buffer.reserve(sampleCount);
