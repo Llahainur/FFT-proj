@@ -30,6 +30,7 @@
 #include "xyseriesiodevice.h"
 #include <stdio.h>
 #include <QtCharts/QXYSeries>
+#include <QList>
 
 XYSeriesIODevice::XYSeriesIODevice(QXYSeries *series, QObject *parent) :
     QIODevice(parent),
@@ -47,12 +48,11 @@ qint64 XYSeriesIODevice::readData(char *data, qint64 maxSize)
 qint64 XYSeriesIODevice::writeData(const char *data, qint64 maxSize)
 {
     static const int resolution = 4;//как-то получить размер буфера кратный степени 2 для бпф
-    qDebug()<<maxSize;
 
     if (m_buffer.isEmpty()) {
         m_buffer.reserve(sampleCount);
         for (int i = 0; i < sampleCount; ++i)
-            m_buffer.append(QPointF(i, 0));
+            m_buffer.append(QPointF(i, 0));//если буфер пустой - резервируем
     }
 
     int start = 0;
@@ -68,5 +68,16 @@ qint64 XYSeriesIODevice::writeData(const char *data, qint64 maxSize)
     }
 
     m_series->replace(m_buffer);
+//    //qDebug() << maxSize;
+//    auto m = m_series->points();
+//    double arr[m.length()];
+//    //qDebug() << m.length();
+//    for (int s=0;s<m.length();s++){
+//        arr[s]=m.at(s).y();
+//    }
+
+    //прогнать массив точек и получить с ненулевым игреком??
+    //qDebug()<<(sampleCount - start) * resolution;
+    //qDebug()<< int(maxSize) / resolution;
     return (sampleCount - start) * resolution;
 }

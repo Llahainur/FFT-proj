@@ -2,11 +2,13 @@ QT += charts multimedia
 #TEMPLATE = subdirs
 
 HEADERS += \
+    converter.h \
     fft.h \
     widget.h \
     xyseriesiodevice.h
 
 SOURCES += \
+    converter.cpp \
     fft.cpp \
     main.cpp\
     widget.cpp \

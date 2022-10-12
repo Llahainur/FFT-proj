@@ -49,10 +49,11 @@ Widget::Widget(const QAudioDevice &deviceInfo, QWidget *parent) :
     m_series(new QLineSeries)
 {
     QChartView *chartView = new QChartView(m_chart);
-    chartView->setMinimumSize(800, 600);
+    chartView->setMinimumSize(1000, 600);
     m_chart->addSeries(m_series);
     QValueAxis *axisX = new QValueAxis;
     axisX->setRange(0, XYSeriesIODevice::sampleCount);
+    //qDebug()<<XYSeriesIODevice::sampleCount;
     axisX->setLabelFormat("%g");
     axisX->setTitleText("Samples");
     QValueAxis *axisY = new QValueAxis;
@@ -71,7 +72,7 @@ Widget::Widget(const QAudioDevice &deviceInfo, QWidget *parent) :
     m_audioInput = new QAudioInput(deviceInfo, this);
 
     QAudioFormat formatAudio;
-    formatAudio.setSampleRate(8000);
+    formatAudio.setSampleRate(5000);
     formatAudio.setChannelCount(1);
     formatAudio.setSampleFormat(QAudioFormat::UInt8);
 
@@ -82,6 +83,8 @@ Widget::Widget(const QAudioDevice &deviceInfo, QWidget *parent) :
     m_device->open(QIODevice::WriteOnly);
 
     m_audioSource->start(m_device);//добавить FFT и вывести на один график
+
+
 }
 
 Widget::~Widget()
