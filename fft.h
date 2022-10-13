@@ -1,10 +1,11 @@
 #ifndef FFT_H
 #define FFT_H
-
+#include <math.h>
+#define _USE_MATH_DEFINES
 
 class FFT
 {
-    const double TwoPi = 6.283185307179586;
+    const double TwoPi = 2*M_PI;
     int check(double *AVal, double *FTvl, int Nvl, int Nft);
 public:
     FFT();

@@ -1,4 +1,4 @@
-QT += testlib
+QT += testlib charts
 QT -= gui
 
 CONFIG += qt console warn_on depend_includepath testcase

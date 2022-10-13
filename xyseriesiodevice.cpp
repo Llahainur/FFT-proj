@@ -68,16 +68,6 @@ qint64 XYSeriesIODevice::writeData(const char *data, qint64 maxSize)
     }
 
     m_series->replace(m_buffer);
-//    //qDebug() << maxSize;
-//    auto m = m_series->points();
-//    double arr[m.length()];
-//    //qDebug() << m.length();
-//    for (int s=0;s<m.length();s++){
-//        arr[s]=m.at(s).y();
-//    }
 
-    //прогнать массив точек и получить с ненулевым игреком??
-    //qDebug()<<(sampleCount - start) * resolution;
-    //qDebug()<< int(maxSize) / resolution;
     return (sampleCount - start) * resolution;
 }

@@ -6,8 +6,8 @@ class Converter//преобразует m_series в массив чисел и �
 {
 public:
     Converter();
-    double * ToDouble(QLineSeries *);
-    QLineSeries * ToMSeries(double *);
+    void ToDouble(QLineSeries *,double *);
+    void ToMSeries(double *,QLineSeries *);
 };
 
 #endif // CONVERTER_H

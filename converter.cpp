@@ -4,13 +4,15 @@ Converter::Converter()
 {
 
 }
-double * ToDouble(QLineSeries *series_var){
+void Converter::ToDouble(QLineSeries *series_var, double *double_var){
     auto points = series_var->points();
     int l=points.length();
+    for (int i=0;i<l;i++){
+        double_var[i]=series_var->at(i).y();
+    }
 };
 
-
-QLineSeries * ToMSeries(double *double_var){
+void Converter::ToMSeries(double *double_var,QLineSeries *series_var){
 
 };
 
