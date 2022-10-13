@@ -2,18 +2,21 @@
 
 Converter::Converter()
 {
-
 }
-void Converter::ToDouble(QLineSeries *series_var, double *double_var){
-    auto points = series_var->points();
-    int l=points.length();
+void Converter::ToDouble(QList<QPointF> points, double *double_var){
+
     for (int i=0;i<l;i++){
-        double_var[i]=series_var->at(i).y();
+        double_var[i]=points.at(i).y();
     }
 };
 
 void Converter::ToMSeries(double *double_var,QLineSeries *series_var){
-
+    series_var->clear();
+    size_t l = sizeof( double_var ) / sizeof( *double_var );
+    for ( size_t i = 0; i < l; i++ )
+    {
+        //добавить в сериз переменную
+    }
 };
 
 

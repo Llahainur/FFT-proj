@@ -22,9 +22,9 @@ public:
     ~test();
 
 private slots:
-    void test_case1();
-    void test_case2();
-
+    void fft_test();
+    void converter_test_to_dbl();
+    void converter_test_to_ser();
 };
 
 test::test()
@@ -38,7 +38,7 @@ test::~test()
 
 }
 
-void test::test_case1()
+void test::fft_test()
 {
     const double PI=M_PI;
     FFT f;
@@ -53,18 +53,29 @@ void test::test_case1()
     // FTvl - массив полученных значений, Nft - длина массива должна быть равна Nvl.
     f.FFTAnalysis(AVal,FTvl,l,l);
     for(int i=0;i<l;i++){
-        qDebug()<<FTvl[i];
+        //qDebug()<<FTvl[i];
     }
 }
 
-void test::test_case2(){
+void test::converter_test_to_dbl(){
     Converter C;
     QLineSeries series;
-    double arr[1];
-    double comp={1};
+    double arr[2];
     series.append(1,1);
+    series.append(2,3);
     C.ToDouble(&series,arr);
-    qDebug()<<*arr;
+    //qDebug()<<series.count();
+    //qDebug()<<arr[0];
+    //qDebug()<<arr[1];
+}
+
+void test::converter_test_to_ser(){
+    Converter C;
+    QLineSeries series;
+    double arr[2]={1,2};
+    C.ToMSeries(arr,&series);//не добавляет точки
+    qDebug()<<series.points().count();
+
 }
 
 QTEST_APPLESS_MAIN(test)

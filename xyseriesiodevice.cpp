@@ -28,14 +28,14 @@
 ****************************************************************************/
 
 #include "xyseriesiodevice.h"
-#include <stdio.h>
-#include <QtCharts/QXYSeries>
-#include <QList>
+
 
 XYSeriesIODevice::XYSeriesIODevice(QXYSeries *series, QObject *parent) :
     QIODevice(parent),
     m_series(series)
 {
+    Converter Conv;
+    FFT Fft;
 }
 
 qint64 XYSeriesIODevice::readData(char *data, qint64 maxSize)
@@ -52,7 +52,7 @@ qint64 XYSeriesIODevice::writeData(const char *data, qint64 maxSize)
     if (m_buffer.isEmpty()) {
         m_buffer.reserve(sampleCount);
         for (int i = 0; i < sampleCount; ++i)
-            m_buffer.append(QPointF(i, 0));//если буфер пустой - резервируем
+            m_buffer.append(QPointF(i, 0));//если буфер пустой - резервируем и заполняем нулями
     }
 
     int start = 0;
@@ -66,6 +66,11 @@ qint64 XYSeriesIODevice::writeData(const char *data, qint64 maxSize)
     for (int s = start; s < sampleCount; ++s, data += resolution){
         m_buffer[s].setY(qreal(uchar(*data) -128) / qreal(128));
     }
+    double arr[Conv.l];
+    double res[Conv.l];
+    Conv.ToDouble(m_buffer,arr);
+    Fft.FFTAnalysis(arr,res,Conv.l,Conv.l);
+    //qDebug()<<sizeof( arr ) / sizeof( *arr );
 
     m_series->replace(m_buffer);
 

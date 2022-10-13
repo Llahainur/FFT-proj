@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 7.84.0, 2022-09-27T19:09:23. -->
+<!-- Written by QtCreator 7.84.0, 2022-10-13T22:26:10. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -68,8 +68,10 @@
     <value type="bool" key="AutoTest.Framework.QtTest">true</value>
    </valuemap>
    <valuemap type="QVariantMap" key="AutoTest.CheckStates">
+    <value type="Qt::CheckState" key="1@C:/QT proj/audio/testFFT/tst_test.cpp:converter_test_to_dbl">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/QT proj/audio/testFFT/tst_test.cpp:converter_test_to_ser">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/QT proj/audio/testFFT/tst_test.cpp:fft_test">Checked</value>
     <value type="Qt::CheckState" key="1@C:/QT proj/audio/testFFT/tst_test.cpp:test">Checked</value>
-    <value type="Qt::CheckState" key="1@C:/QT proj/audio/testFFT/tst_test.cpp:test_case1">Checked</value>
    </valuemap>
    <value type="int" key="AutoTest.RunAfterBuild">0</value>
    <value type="bool" key="AutoTest.UseGlobal">true</value>
