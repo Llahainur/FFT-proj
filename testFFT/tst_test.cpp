@@ -59,11 +59,11 @@ void test::fft_test()
 
 void test::converter_test_to_dbl(){
     Converter C;
-    QLineSeries series;
+    QList<QPointF> p;
     double arr[2];
-    series.append(1,1);
-    series.append(2,3);
-    C.ToDouble(&series,arr);
+    p.append(QPoint(1,1));
+    p.append(QPoint(2,3));
+    C.ToDouble(p,arr);
     //qDebug()<<series.count();
     //qDebug()<<arr[0];
     //qDebug()<<arr[1];
@@ -71,10 +71,12 @@ void test::converter_test_to_dbl(){
 
 void test::converter_test_to_ser(){
     Converter C;
-    QLineSeries series;
+    QList<QPointF> p;
+    p.append(QPoint(1,1));
+    p.append(QPoint(3,2));
     double arr[2]={1,2};
-    C.ToMSeries(arr,&series);//не добавляет точки
-    qDebug()<<series.points().count();
+    C.ToMSeries(arr,p);//не добавляет точки
+    qDebug()<<p.count();
 
 }
 
