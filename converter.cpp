@@ -13,11 +13,13 @@ int Converter::findLen(int l){
 }
 
 void Converter::ToDouble(QList<QPointF> points, double *double_var){
-    l=findLen(points.count());
+    //l=findLen(points.count());
+    int l=this->l;
 
     for (int i=0;i<l;i++){
         double_var[i]=points.at(i).y();
     }
+    qDebug()<<l;
 };
 
 void Converter::ToMSeries(double *double_var,QList<QPointF> points){
