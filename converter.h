@@ -10,8 +10,8 @@ public:
     Converter();
     void ToDouble(QList<QPointF> points,double *);
     void ToMSeries(double *,QList<QPointF> points);
-    //const int l= 4096;
-    int l=2048;
+    int l= 4096;
+    //int l=2048;
 };
 
 #endif // CONVERTER_H

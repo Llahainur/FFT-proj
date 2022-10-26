@@ -66,11 +66,14 @@ qint64 XYSeriesIODevice::writeData(const char *data, qint64 maxSize)
     for (int s = start; s < sampleCount; ++s, data += resolution){
         m_buffer[s].setY(qreal(uchar(*data) -128) / qreal(128));
     }
-    //double arr[Conv.l];
-    //double res[Conv.l];
-    //Conv.ToDouble(m_buffer,arr);
-    //Fft.FFTAnalysis(arr,res,Conv.l,Conv.l);
-    //qDebug()<<sizeof( arr ) / sizeof( *arr );
+    double arr[Conv.l];
+    double res[Conv.l];
+    Conv.ToDouble(m_buffer,arr);
+
+    Fft.FFTAnalysis(arr,res,Conv.l,Conv.l);//добавить второй виджет и подключиь к нему
+
+    //Conv.ToMSeries(res,m_buffer);
+
 
     m_series->replace(m_buffer);
 
