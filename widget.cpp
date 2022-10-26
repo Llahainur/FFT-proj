@@ -57,7 +57,7 @@ Widget::Widget(const QAudioDevice &deviceInfo, QWidget *parent) :
     axisX->setLabelFormat("%g");
     axisX->setTitleText("Samples");
     QValueAxis *axisY = new QValueAxis;
-    axisY->setRange(-1, 1);
+    axisY->setRange(-0.5, 0.5);
     axisY->setTitleText("Audio level");
     m_chart->addAxis(axisX, Qt::AlignBottom);
     m_series->attachAxis(axisX);
