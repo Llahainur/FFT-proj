@@ -22,7 +22,7 @@ FFT_Widget::FFT_Widget(const QAudioDevice &deviceInfo, QWidget *parent) :
     chartView->setMinimumSize(1000, 600);
     m_chart->addSeries(m_series);
     QValueAxis *axisX = new QValueAxis;
-    axisX->setRange(0, 4096);
+    axisX->setRange(-2048, 2048);
     axisX->setLabelFormat("%g");
     axisX->setTitleText("Samples");
     QValueAxis *axisY = new QValueAxis;

@@ -74,10 +74,7 @@ qint64 XYSeriesIODevice_FFT::writeData(const char *data, qint64 maxSize)
 
 
     QList<QPointF> fft_series;
-        fft_series.clear();
-        for(int i=0;i<Conv.l;i++){
-            fft_series.append(QPointF(i,res[i]));
-        }
+    Conv.ToMSeries(res,&fft_series);
 
     m_series->replace(fft_series);
 
