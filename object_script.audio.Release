@@ -1,0 +1,11 @@
+release/converter.o
+release/fft.o
+release/fft_widget.o
+release/main.o
+release/widget.o
+release/xyseriesiodevice.o
+release/xyseriesiodevice_fft.o
+release/moc_fft_widget.o
+release/moc_widget.o
+release/moc_xyseriesiodevice.o
+release/moc_xyseriesiodevice_fft.o

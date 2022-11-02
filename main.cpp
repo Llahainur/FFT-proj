@@ -28,6 +28,7 @@
 ****************************************************************************/
 
 #include "widget.h"
+#include "fft_widget.h"
 
 #include <QtMultimedia/QAudioDevice>
 #include <QtMultimedia/QMediaDevices>
@@ -45,8 +46,10 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    Widget w(inputDevice);
-    w.show();
+//    Widget w(inputDevice);
+//    w.show();
+    FFT_Widget f(inputDevice);
+    f.show();
     
     return a.exec();
 }
