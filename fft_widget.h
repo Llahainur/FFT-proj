@@ -27,49 +27,41 @@
 **
 ****************************************************************************/
 
-#include "xyseriesiodevice.h"
+#ifndef FFT_WIDGET_H
+#define FFT_WIDGET_H
 
+#include <QtWidgets/QWidget>
+#include <QtCharts/QChartGlobal>
 
-XYSeriesIODevice::XYSeriesIODevice(QXYSeries *series, QObject *parent) :
-    QIODevice(parent),
-    m_series(series)
+QT_BEGIN_NAMESPACE
+class QLineSeries;
+class QChart;
+QT_END_NAMESPACE
+
+QT_USE_NAMESPACE
+
+class XYSeriesIODevice_FFT;
+
+QT_BEGIN_NAMESPACE
+class QAudioInput;
+class QAudioDevice;
+class QAudioSource;
+QT_END_NAMESPACE
+
+class FFT_Widget : public QWidget
 {
-    Converter Conv;
-    FFT Fft;
-}
+    Q_OBJECT
 
-qint64 XYSeriesIODevice::readData(char *data, qint64 maxSize)
-{
-    Q_UNUSED(data);
-    Q_UNUSED(maxSize);
-    return -1;
-}
+public:
+    explicit FFT_Widget(const QAudioDevice &deviceInfo, QWidget *parent = nullptr);
+    ~FFT_Widget();
 
-qint64 XYSeriesIODevice::writeData(const char *data, qint64 maxSize)
-{
-    static const int resolution = 4;//как-то получить размер буфера кратный степени 2 для бпф
+private:
+    XYSeriesIODevice_FFT *m_device = nullptr;
+    QChart *m_chart;
+    QLineSeries *m_series ;
+    QAudioInput *m_audioInput = nullptr;
+    QAudioSource *m_audioSource = nullptr;
+};
 
-    if (m_buffer.isEmpty()) {
-        m_buffer.reserve(sampleCount);
-        for (int i = 0; i < sampleCount; ++i)
-            m_buffer.append(QPointF(i, 0));//если буфер пустой - резервируем и заполняем нулями
-    }
-
-    int start = 0;
-    const int availableSamples = int(maxSize) / resolution;
-    if (availableSamples < sampleCount) {
-        start = sampleCount - availableSamples;
-        for (int s = 0; s < start; ++s)
-            m_buffer[s].setY(m_buffer.at(s + availableSamples).y());
-    }
-
-    for (int s = start; s < sampleCount; ++s, data += resolution){
-        m_buffer[s].setY(qreal(uchar(*data) -128) / qreal(128));
-    }
-
-
-
-    m_series->replace(m_buffer);
-
-    return (sampleCount - start) * resolution;
-}
+#endif // WIDGET_H

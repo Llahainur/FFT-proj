@@ -27,49 +27,42 @@
 **
 ****************************************************************************/
 
-#include "xyseriesiodevice.h"
+#ifndef XYSERIESIODEVICE_FFT_H
+#define XYSERIESIODEVICE_FFT_H
 
+#include <QtCore/QIODevice>
+#include <QtCore/QPointF>
+#include <QtCore/QList>
+#include <QtCharts/QChartGlobal>
+#include <stdio.h>
+#include <QtCharts/QXYSeries>
+#include <QList>
+#include "converter.h"
+#include "fft.h"
 
-XYSeriesIODevice::XYSeriesIODevice(QXYSeries *series, QObject *parent) :
-    QIODevice(parent),
-    m_series(series)
+QT_BEGIN_NAMESPACE
+class QXYSeries;
+QT_END_NAMESPACE
+
+QT_USE_NAMESPACE
+
+class XYSeriesIODevice_FFT : public QIODevice
 {
+    Q_OBJECT
+public:
+    explicit XYSeriesIODevice_FFT(QXYSeries *series, QObject *parent = nullptr);
+
+    static const int sampleCount = 5000;
+
+protected:
+    qint64 readData(char *data, qint64 maxSize) override;
+    qint64 writeData(const char *data, qint64 maxSize) override;
+
+private:
+    QXYSeries *m_series;
+    QList<QPointF> m_buffer;
     Converter Conv;
     FFT Fft;
-}
+};
 
-qint64 XYSeriesIODevice::readData(char *data, qint64 maxSize)
-{
-    Q_UNUSED(data);
-    Q_UNUSED(maxSize);
-    return -1;
-}
-
-qint64 XYSeriesIODevice::writeData(const char *data, qint64 maxSize)
-{
-    static const int resolution = 4;//как-то получить размер буфера кратный степени 2 для бпф
-
-    if (m_buffer.isEmpty()) {
-        m_buffer.reserve(sampleCount);
-        for (int i = 0; i < sampleCount; ++i)
-            m_buffer.append(QPointF(i, 0));//если буфер пустой - резервируем и заполняем нулями
-    }
-
-    int start = 0;
-    const int availableSamples = int(maxSize) / resolution;
-    if (availableSamples < sampleCount) {
-        start = sampleCount - availableSamples;
-        for (int s = 0; s < start; ++s)
-            m_buffer[s].setY(m_buffer.at(s + availableSamples).y());
-    }
-
-    for (int s = start; s < sampleCount; ++s, data += resolution){
-        m_buffer[s].setY(qreal(uchar(*data) -128) / qreal(128));
-    }
-
-
-
-    m_series->replace(m_buffer);
-
-    return (sampleCount - start) * resolution;
-}
+#endif // XYSERIESIODEVICE_FFT_H

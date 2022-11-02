@@ -1,0 +1,11 @@
+debug/converter.o
+debug/fft.o
+debug/fft_widget.o
+debug/main.o
+debug/widget.o
+debug/xyseriesiodevice.o
+debug/xyseriesiodevice_fft.o
+debug/moc_fft_widget.o
+debug/moc_widget.o
+debug/moc_xyseriesiodevice.o
+debug/moc_xyseriesiodevice_fft.o

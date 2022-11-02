@@ -27,10 +27,10 @@
 **
 ****************************************************************************/
 
-#include "xyseriesiodevice.h"
+#include "xyseriesiodevice_fft.h"
 
 
-XYSeriesIODevice::XYSeriesIODevice(QXYSeries *series, QObject *parent) :
+XYSeriesIODevice_FFT::XYSeriesIODevice_FFT(QXYSeries *series, QObject *parent) :
     QIODevice(parent),
     m_series(series)
 {
@@ -38,21 +38,21 @@ XYSeriesIODevice::XYSeriesIODevice(QXYSeries *series, QObject *parent) :
     FFT Fft;
 }
 
-qint64 XYSeriesIODevice::readData(char *data, qint64 maxSize)
+qint64 XYSeriesIODevice_FFT::readData(char *data, qint64 maxSize)
 {
     Q_UNUSED(data);
     Q_UNUSED(maxSize);
     return -1;
 }
 
-qint64 XYSeriesIODevice::writeData(const char *data, qint64 maxSize)
+qint64 XYSeriesIODevice_FFT::writeData(const char *data, qint64 maxSize)
 {
-    static const int resolution = 4;//как-то получить размер буфера кратный степени 2 для бпф
+    static const int resolution = 4;
 
     if (m_buffer.isEmpty()) {
         m_buffer.reserve(sampleCount);
         for (int i = 0; i < sampleCount; ++i)
-            m_buffer.append(QPointF(i, 0));//если буфер пустой - резервируем и заполняем нулями
+            m_buffer.append(QPointF(i, 0));
     }
 
     int start = 0;
@@ -66,10 +66,20 @@ qint64 XYSeriesIODevice::writeData(const char *data, qint64 maxSize)
     for (int s = start; s < sampleCount; ++s, data += resolution){
         m_buffer[s].setY(qreal(uchar(*data) -128) / qreal(128));
     }
+    double arr[Conv.l];
+    double res[Conv.l];
+    Conv.ToDouble(m_buffer,arr);
+
+    Fft.FFTAnalysis(arr,res,Conv.l,Conv.l);//добавить второй виджет и подключиь к нему
 
 
+    QList<QPointF> fft_series;
+        fft_series.clear();
+        for(int i=0;i<Conv.l;i++){
+            fft_series.append(QPointF(i,res[i]));
+        }
 
-    m_series->replace(m_buffer);
+    m_series->replace(fft_series);
 
     return (sampleCount - start) * resolution;
 }

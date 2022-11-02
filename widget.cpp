@@ -53,7 +53,6 @@ Widget::Widget(const QAudioDevice &deviceInfo, QWidget *parent) :
     m_chart->addSeries(m_series);
     QValueAxis *axisX = new QValueAxis;
     axisX->setRange(0, XYSeriesIODevice::sampleCount);
-    //qDebug()<<XYSeriesIODevice::sampleCount;
     axisX->setLabelFormat("%g");
     axisX->setTitleText("Samples");
     QValueAxis *axisY = new QValueAxis;
@@ -67,6 +66,7 @@ Widget::Widget(const QAudioDevice &deviceInfo, QWidget *parent) :
     m_chart->setTitle("Data from the microphone (" + deviceInfo.description() + ')');
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
+
     mainLayout->addWidget(chartView);
 
     m_audioInput = new QAudioInput(deviceInfo, this);

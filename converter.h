@@ -9,7 +9,7 @@ class Converter//преобразует m_series в массив чисел и �
 public:
     Converter();
     void ToDouble(QList<QPointF> points,double *);
-    void ToMSeries(double *,QList<QPointF> points);
+    void ToMSeries(double *,QList<QPointF> *);
     int l= 4096;
     //int l=2048;
 };
