@@ -4,6 +4,8 @@ Converter::Converter()
 {
 }
 
+
+
 int Converter::findLen(int l){
     int len=1;
     while (len*2<l){
@@ -22,15 +24,21 @@ void Converter::ToDouble(QList<QPointF> points, double *double_var){
     //qDebug()<<l;
 };
 
-void Converter::ToMSeries(double *double_var, QList<QPointF> *points){
-    //series_var->clear();
+void Converter::PerFunc(double *x,double *y){
+    //*x-=l/2;
+    int f = *x;
+    *x=0.30431*1.6*f;
+}
+
+void Converter::ToMSeries(double *res, QList<QPointF> *points){
     points->clear();
-    QPoint p;
-    size_t l = sizeof( double_var ) / sizeof( *double_var );
-    for ( size_t i = 0; i < l; i++ )
-    {
-        p = QPoint(i,double_var[i]);
-        points->append(p);
+    double x;
+    double y;
+    for(int i=0;i<l/2;i++){
+        x=double(i);
+        y=res[i];
+        PerFunc(&x,&y);
+        points->append(QPointF(x,y));//Проверить правильность конвертирвания
     }
 };
 
