@@ -68,3 +68,4 @@ void FFT::FFTAnalysis(double *AVal, double *FTvl, int Nvl, int Nft) {
 int FFT::check(double *AVal, double *FTvl, int Nvl, int Nft){
     int res=0;
 }
+

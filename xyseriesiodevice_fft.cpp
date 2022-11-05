@@ -70,7 +70,7 @@ qint64 XYSeriesIODevice_FFT::writeData(const char *data, qint64 maxSize)
     double res[Conv.l];
     Conv.ToDouble(m_buffer,arr);
 
-    Fft.FFTAnalysis(arr,res,Conv.l,Conv.l);//добавить второй виджет и подключиь к нему
+    Fft.FFTAnalysis(arr,res,Conv.l,Conv.l);
 
 
     QList<QPointF> fft_series;
