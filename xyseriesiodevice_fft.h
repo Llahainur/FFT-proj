@@ -38,7 +38,7 @@
 #include <QtCharts/QXYSeries>
 #include <QList>
 #include "converter.h"
-#include "fft.h"
+//#include "fft.h"
 
 QT_BEGIN_NAMESPACE
 class QXYSeries;
@@ -62,7 +62,7 @@ private:
     QXYSeries *m_series;
     QList<QPointF> m_buffer;
     Converter Conv;
-    FFT Fft;
+    //FFT Fft;
 };
 
 #endif // XYSERIESIODEVICE_FFT_H
