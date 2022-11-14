@@ -52,7 +52,7 @@ class XYSeriesIODevice_FFT : public QIODevice
 public:
     explicit XYSeriesIODevice_FFT(QXYSeries *series, QObject *parent = nullptr);
 
-    static const int sampleCount = 5000;
+    static const int sampleCount = 8192;
 
 protected:
     qint64 readData(char *data, qint64 maxSize) override;

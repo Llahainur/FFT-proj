@@ -15,18 +15,18 @@ int Converter::findLen(int l){
 }
 
 void Converter::ToDouble(QList<QPointF> points, double *double_var){
-    //l=findLen(points.count());
     int l=this->frameLen;
-
     for (int i=0;i<l;i++){
         double_var[i]=points.at(i).y();
     }
 };
 
 void Converter::PerFunc(double *x,double *y){
-    //*x-=l/2;
-    int f = *x;//функция градуировки
-    *x=0.30431*f;
+
+    *x=grad_Kx**x;
+    *y=grad_Ky**y;
+
+    //qDebug()<<*y<<" ";//<<yf;
 }
 
 void Converter::ToMSeries(double *res, QList<QPointF> *points){
@@ -101,14 +101,34 @@ void Converter::FFTAnalysis(double *AVal, double *FTvl, int Nvl, int Nft){
   }
 
 
-bool Converter::AddToStack(double *x, stack<double> *st){
-    st->push(*x);
-    if(st->size()<frameLen){
-        return 0;
-    }
-    else{
-        return 1;
+void Converter::AverageForArrays(double * arr_of_vals, double * aver_res, double * fft_res){
+    //добавляем каждый элемент массива в стек по i (0 - в 0, посл - в посл)
+    //считаем среднее квадратичное по элем
+    //передаем в fft
+    int i;
+    int j;
+    aver_calls+=1;
+    for (i=0;i<frameLen;i++){
+        aver_res[i]=sqrt(arr_of_vals[i]*arr_of_vals[i]);
+        aver_res[i]=WindowFuncBarlett(aver_res[i]);
+//        if (i<frameLen-2){
+//            aver_res[i]=(aver_res[i+1]+aver_res[i])/2;
+//        }
+        //aver_res[i]=sqrt((aver_res[i]*aver_res[i])+(arr_of_vals[i] * arr_of_vals[i]));
+        aver_res[i]=(aver_res[i]*aver_calls+arr_of_vals[i])/aver_calls+1;
+        if (i==frameLen-1 and aver_calls==aver_calls_max){
+            FFTAnalysis(aver_res,fft_res,frameLen,frameLen);
+            for (j=0;j<frameLen;j++){
+                aver_res[i]=0;
+            }
+            aver_calls=0;
+
+        }
     }
 
 };
+
+double Converter::WindowFuncBarlett(double x){
+    return 1-2*abs(x);
+}
 

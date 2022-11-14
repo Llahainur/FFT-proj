@@ -67,14 +67,17 @@ qint64 XYSeriesIODevice_FFT::writeData(const char *data, qint64 maxSize)
         m_buffer[s].setY(qreal(uchar(*data) -128) / qreal(128));
     }
     double arr[Conv.frameLen];
-    double res[Conv.frameLen];
+    double av_res[Conv.frameLen];
+    double fft_res[Conv.frameLen];
+
     Conv.ToDouble(m_buffer,arr);//записывать в дек, при достижении заполнения считать fft ср арифм
 
-    Conv.FFTAnalysis(arr,res,Conv.frameLen,Conv.frameLen);//слишком часто вычисляется
+    //Conv.FFTAnalysis(arr,fft_res,Conv.frameLen,Conv.frameLen);//слишком часто вычисляется
 
+    Conv.AverageForArrays(arr,av_res,fft_res);
 
     QList<QPointF> fft_series;
-    Conv.ToMSeries(res,&fft_series);
+    Conv.ToMSeries(fft_res,&fft_series);
 
     m_series->replace(fft_series);
 
