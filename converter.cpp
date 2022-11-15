@@ -5,15 +5,6 @@ Converter::Converter()
 }
 
 
-
-int Converter::findLen(int l){
-    int len=1;
-    while (len*2<l){
-        len*=2;
-    }
-    return len;
-}
-
 void Converter::ToDouble(QList<QPointF> points, double *double_var){
     int l=this->frameLen;
     for (int i=0;i<l;i++){
@@ -36,7 +27,7 @@ void Converter::ToMSeries(double *res, QList<QPointF> *points){
     for(int i=0;i<frameLen/2;i++){
         x=double(i);
         y=res[i];
-        PerFunc(&x,&y);
+        //PerFunc(&x,&y);
         points->append(QPointF(x,y));//Проверить правильность конвертирвания
     }
 };
@@ -109,13 +100,15 @@ void Converter::AverageForArrays(double * arr_of_vals, double * aver_res, double
     int j;
     aver_calls+=1;
     for (i=0;i<frameLen;i++){
-        aver_res[i]=sqrt(arr_of_vals[i]*arr_of_vals[i]);
-        aver_res[i]=WindowFuncBarlett(aver_res[i]);
+        //aver_res[i]=sqrt(arr_of_vals[i]*arr_of_vals[i]);
 //        if (i<frameLen-2){
 //            aver_res[i]=(aver_res[i+1]+aver_res[i])/2;
 //        }
         //aver_res[i]=sqrt((aver_res[i]*aver_res[i])+(arr_of_vals[i] * arr_of_vals[i]));
+        aver_res[i]=arr_of_vals[i];
         aver_res[i]=(aver_res[i]*aver_calls+arr_of_vals[i])/aver_calls+1;
+
+        aver_res[i]=WindowFuncBarlett(aver_res[i]);
         if (i==frameLen-1 and aver_calls==aver_calls_max){
             FFTAnalysis(aver_res,fft_res,frameLen,frameLen);
             for (j=0;j<frameLen;j++){

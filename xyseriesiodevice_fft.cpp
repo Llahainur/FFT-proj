@@ -72,8 +72,6 @@ qint64 XYSeriesIODevice_FFT::writeData(const char *data, qint64 maxSize)
 
     Conv.ToDouble(m_buffer,arr);//записывать в дек, при достижении заполнения считать fft ср арифм
 
-    //Conv.FFTAnalysis(arr,fft_res,Conv.frameLen,Conv.frameLen);//слишком часто вычисляется
-
     Conv.AverageForArrays(arr,av_res,fft_res);
 
     QList<QPointF> fft_series;

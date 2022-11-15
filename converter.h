@@ -11,13 +11,12 @@ using namespace std;
 
 class Converter//преобразует m_series в массив чисел и обратно
 {
-    int findLen(int l);
     const double TwoPi = 2*M_PI;
     const double PI = M_PI;
-    const double grad_Kx=0.247;
+    const double grad_Kx=1;
     const double grad_Ky=1;
     int aver_calls=0;
-    const int aver_calls_max=100;
+    const int aver_calls_max=10;
 
 public:
     Converter();
