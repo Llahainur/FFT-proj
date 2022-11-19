@@ -24,13 +24,13 @@ FFT_Widget::FFT_Widget(const QAudioDevice &deviceInfo, QWidget *parent) :
     QValueAxis *axisX = new QValueAxis;
     axisX->setRange(0, maxFreq);
     axisX->setLabelFormat("%g");
-    axisX->setTitleText("Частоота, Гц");
+    axisX->setTitleText("Отсчеты по частоте");
     axisX->setTickCount(16+1);
     //axisX->setTickInterval(100);
 
     QValueAxis *axisY = new QValueAxis;
     axisY->setRange(0, maxAmpl);
-    axisY->setTitleText("Амплитуда, ?");
+    axisY->setTitleText("Амплитуда");
 
 
     m_chart->addAxis(axisX, Qt::AlignBottom);

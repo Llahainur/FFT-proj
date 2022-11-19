@@ -57,6 +57,7 @@ public:
     ~FFT_Widget();
     const double maxAmpl=0.1;
     const int sampleRate = 20000;
+    const int maxFreq=4096;
 private:
     XYSeriesIODevice_FFT *m_device = nullptr;
     QChart *m_chart;

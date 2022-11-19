@@ -16,7 +16,7 @@ class Converter//преобразует m_series в массив чисел и �
     const double grad_Kx=1;
     const double grad_Ky=1;
     int aver_calls=0;
-    const int aver_calls_max=10;
+    const int aver_calls_max=50;
 
 public:
     Converter();
