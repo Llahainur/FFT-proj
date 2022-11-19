@@ -35,7 +35,7 @@ XYSeriesIODevice_FFT::XYSeriesIODevice_FFT(QXYSeries *series, QObject *parent) :
     m_series(series)
 {
     Converter Conv;
-    FFT Fft;
+    //FFT Fft;
 }
 
 qint64 XYSeriesIODevice_FFT::readData(char *data, qint64 maxSize)
@@ -66,15 +66,16 @@ qint64 XYSeriesIODevice_FFT::writeData(const char *data, qint64 maxSize)
     for (int s = start; s < sampleCount; ++s, data += resolution){
         m_buffer[s].setY(qreal(uchar(*data) -128) / qreal(128));
     }
-    double arr[Conv.l];
-    double res[Conv.l];
-    Conv.ToDouble(m_buffer,arr);
+    double arr[Conv.frameLen];
+    double av_res[Conv.frameLen];
+    double fft_res[Conv.frameLen];
 
-    Fft.FFTAnalysis(arr,res,Conv.l,Conv.l);
+    Conv.ToDouble(m_buffer,arr);//записывать в дек, при достижении заполнения считать fft ср арифм
 
+    Conv.AverageForArrays(arr,av_res,fft_res);
 
     QList<QPointF> fft_series;
-    Conv.ToMSeries(res,&fft_series);
+    Conv.ToMSeries(fft_res,&fft_series);
 
     m_series->replace(fft_series);
 

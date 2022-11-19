@@ -22,17 +22,16 @@ FFT_Widget::FFT_Widget(const QAudioDevice &deviceInfo, QWidget *parent) :
     chartView->setMinimumSize(1000, 600);
     m_chart->addSeries(m_series);
     QValueAxis *axisX = new QValueAxis;
-    axisX->setRange(0, 650);
+    axisX->setRange(0, maxFreq);
     axisX->setLabelFormat("%g");
-    axisX->setTitleText("Частоота, Гц");
-    axisX->setTickCount(26+1);
+    axisX->setTitleText("Отсчеты по частоте");
+    axisX->setTickCount(16+1);
     //axisX->setTickInterval(100);
 
     QValueAxis *axisY = new QValueAxis;
-    axisY->setRange(0, 0.04);
-    axisY->setTitleText("Амплитуда, ?");
-    //axisY->setTickCount(31);
-    //axisX->setTickInterval(100);
+    axisY->setRange(0, maxAmpl);
+    axisY->setTitleText("Амплитуда");
+
 
     m_chart->addAxis(axisX, Qt::AlignBottom);
     m_series->attachAxis(axisX);
@@ -48,17 +47,17 @@ FFT_Widget::FFT_Widget(const QAudioDevice &deviceInfo, QWidget *parent) :
     m_audioInput = new QAudioInput(deviceInfo, this);
 
     QAudioFormat formatAudio;
-    formatAudio.setSampleRate(5000);//можно менять с переградуировкой. При увеличении увеличивается макс частота
+    formatAudio.setSampleRate(sampleRate);
     formatAudio.setChannelCount(1);
     formatAudio.setSampleFormat(QAudioFormat::UInt8);
 
     m_audioSource = new QAudioSource(deviceInfo, formatAudio);
-    m_audioSource->setBufferSize(200);
+    m_audioSource->setBufferSize(500);
 
     m_device = new XYSeriesIODevice_FFT(m_series, this);
     m_device->open(QIODevice::WriteOnly);
 
-    m_audioSource->start(m_device);//добавить FFT и вывести на один график
+    m_audioSource->start(m_device);
 
 }
 

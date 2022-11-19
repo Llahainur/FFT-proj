@@ -3,19 +3,19 @@ QT += charts multimedia
 
 HEADERS += \
     converter.h \
-    fft.h \
+    #fft.h \
     fft_widget.h \
-    widget.h \
-    xyseriesiodevice.h \
+    #widget.h \
+    #xyseriesiodevice.h \
     xyseriesiodevice_fft.h
 
 SOURCES += \
     converter.cpp \
-    fft.cpp \
+    #fft.cpp \
     fft_widget.cpp \
     main.cpp\
-    widget.cpp \
-    xyseriesiodevice.cpp \
+    #widget.cpp \
+    #xyseriesiodevice.cpp \
     xyseriesiodevice_fft.cpp
 
 

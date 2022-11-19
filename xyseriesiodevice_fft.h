@@ -38,7 +38,7 @@
 #include <QtCharts/QXYSeries>
 #include <QList>
 #include "converter.h"
-#include "fft.h"
+//#include "fft.h"
 
 QT_BEGIN_NAMESPACE
 class QXYSeries;
@@ -52,7 +52,7 @@ class XYSeriesIODevice_FFT : public QIODevice
 public:
     explicit XYSeriesIODevice_FFT(QXYSeries *series, QObject *parent = nullptr);
 
-    static const int sampleCount = 5000;
+    static const int sampleCount = 8192;
 
 protected:
     qint64 readData(char *data, qint64 maxSize) override;
@@ -62,7 +62,7 @@ private:
     QXYSeries *m_series;
     QList<QPointF> m_buffer;
     Converter Conv;
-    FFT Fft;
+    //FFT Fft;
 };
 
 #endif // XYSERIESIODEVICE_FFT_H
