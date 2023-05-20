@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -18,12 +19,16 @@ QT_BEGIN_NAMESPACE
 class Ui_FFT_Widget
 {
 public:
+    QGraphicsView *graphicsView;
 
     void setupUi(QWidget *FFT_Widget)
     {
         if (FFT_Widget->objectName().isEmpty())
             FFT_Widget->setObjectName(QString::fromUtf8("FFT_Widget"));
         FFT_Widget->resize(649, 479);
+        graphicsView = new QGraphicsView(FFT_Widget);
+        graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
+        graphicsView->setGeometry(QRect(100, 130, 256, 192));
 
         retranslateUi(FFT_Widget);
 
