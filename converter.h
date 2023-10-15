@@ -24,6 +24,7 @@ public:
     void ToMSeries(double *,QList<QPointF> *);
     void PerFunc(double *x, double *y);
     void AverageForArrays(double * arr_of_vals, double * aver_res, double * fft_res);
+    void AverageForArrays2(double * arr_of_vals, double * aver_res, double * fft_res);
     void FFTAnalysis(double *AVal, double *FTvl, int Nvl, int Nft);
     double WindowFuncBarlett(double x);//Треугольное
     const int frameLen=8192;

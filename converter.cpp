@@ -98,14 +98,9 @@ void Converter::AverageForArrays(double * arr_of_vals, double * aver_res, double
     int j;
     aver_calls+=1;
     for (i=0;i<frameLen;i++){
-        //aver_res[i]=sqrt(arr_of_vals[i]*arr_of_vals[i]);
-//        if (i<frameLen-2){
-//            aver_res[i]=(aver_res[i+1]+aver_res[i])/2;
-//        }
-        //aver_res[i]=sqrt((aver_res[i]*aver_res[i])+(arr_of_vals[i] * arr_of_vals[i]));
         aver_res[i]=arr_of_vals[i];
         aver_res[i]=(aver_res[i]*aver_calls+arr_of_vals[i])/aver_calls+1;
-        aver_res[i]=WindowFuncBarlett(aver_res[i]);
+        //aver_res[i]=WindowFuncBarlett(aver_res[i]);
         if (i==frameLen-1 and aver_calls==aver_calls_max){
             FFTAnalysis(aver_res,fft_res,frameLen,frameLen);
             for (j=0;j<frameLen;j++){
@@ -116,6 +111,23 @@ void Converter::AverageForArrays(double * arr_of_vals, double * aver_res, double
         }
     }
 
+};
+
+void Converter::AverageForArrays2(double * arr_of_vals, double * aver_res, double * fft_res){
+    int i;
+    int j;
+    aver_calls+=1;
+    //for (i=0;i<frameLen;i++){
+        aver_res=arr_of_vals;
+        //aver_res[i]=(aver_res[i]*aver_calls+arr_of_vals[i])/aver_calls+1;
+        //aver_res[i]=WindowFuncBarlett(aver_res[i]);
+        if (i==frameLen-1 and aver_calls==aver_calls_max){
+            FFTAnalysis(aver_res,fft_res,frameLen,frameLen);
+            for (j=0;j<frameLen;j++){
+                aver_res[i]=0;
+            }
+            aver_calls=0;
+        }
 };
 
 double Converter::WindowFuncBarlett(double x){

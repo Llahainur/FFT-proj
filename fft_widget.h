@@ -55,7 +55,7 @@ class FFT_Widget : public QWidget
 public:
     explicit FFT_Widget(const QAudioDevice &deviceInfo, QWidget *parent = nullptr);
     ~FFT_Widget();
-    const double maxAmpl=0.05;
+    const double maxAmpl=0.04;
     const int sampleRate = 20000;
     const int maxFreq=2048;
 private:
